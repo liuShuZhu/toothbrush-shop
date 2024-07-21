@@ -1,45 +1,49 @@
 <template>
   <SectionFull class="bannerBox min-h-screen flex flex-col items-center justify-center  bg-center bg-cover bg-[url('@/assets/banner.jpg')]">
-    <div class="max-w-[512px] rounded-xl bg-white/95 text-[#1d1d1d] my-3 mx-6 px-4 py-12 md:p-12 md:pt-[88px] lg:translate-x-[56%]">
-            <div class=" font-semibold text-center md:text-left text-3xl md:text-[40px] tracking-widest leading-tight">
-                Check Your <br>
-                Warranty Status
+    <div class="max-w-[512px] w-11/12 rounded-xl bg-white/95 text-[#1d1d1d] my-3 mx-6 px-4 md:px-8 py-8 ">
+            <h1 class='text-3xl text-center'>Warranty Status</h1>
+            <div class='mt-4'>
+              <label class=" font-bold mr-2" >Order ID:</label>
+              <span>{{orderId}}</span>
             </div>
-            <div class="mt-5 text-sm md:text-base md:mt-10 tracking-widest font-bold">
-                Amazon Order ID 
+            <div class='mt-4'>
+              <label class=" font-bold mr-2" >Valid Date:</label>
+              <span>{{day}} Days</span>
             </div>
-            <div class="mt-5 pb-12 relative">
-                <input @blur="onBlur" @input="onInput" type="text" name="email" id="email" class="codeInput focus:ring-black  focus:border-black" placeholder="Eg:123-1234567-1234567" v-model="orderId" aria-invalid="true" aria-describedby="email-error" />
-                <p v-if="idError" class="absolute tracking-wider mt-2 text-sm text-red-600" id="email-error">Amazon Order ID / Shopify Order Number / Redemption Code is required</p>
-            </div>
-            <div @click ='onCheckStatus' class="warranty-common-btn bg-[#01799c] rounded-full before:bg-[#048eb6]">
-              <span class=" relative z-10">SUBMIT</span>
+            
+            <div class="mt-4">
+              <label class="font-bold">Warranty Progress:</label>
+              <div class="flex items-center mt-2">
+                <div class=" flex-auto bg-gray-300 h-4 rounded-full overflow-hidden ">
+                  <div class="bg-[#347799] text-white rounded-full h-full" :style="{width:per}">
+                  </div>
+                </div>
+                <span class="flex-none ml-4">{{per}}</span>
+              </div>
+             
             </div>
         </div>
   </SectionFull>
 </template>
 <script setup>
-import {ref} from 'vue'
-import {useRouter} from 'vue-router'
-
+import {onMounted, ref} from 'vue'
+import {useRouter,useRoute} from 'vue-router'
 import SectionFull from '@/components/SectionFull/index.vue';
 import { checkStatus } from "@/api";
 import {useNotifStore} from '@/stores/notifications'
 const notifStore = useNotifStore()
+const route = useRoute()
 const router = useRouter()
-const orderId = ref('')
+if(!route.query.orderId){
+  router.push({
+    path:'/warranty/checkstatus'
+  })
+}
+const orderId = ref(route.query.orderId)
 const idError = ref(false)
 const isCommit = ref(false)
-const onBlur = () => {
-  if(!orderId.value){
-    idError.value = true
-  }
-}
-const onInput = () => {
-  if(orderId.value){
-    idError.value = false
-  }
-}
+const day = ref(0)
+const per = ref(0)
 const onCheckStatus = async () => {
     try {
       if(isCommit.value)return
@@ -47,12 +51,8 @@ const onCheckStatus = async () => {
       const res = await checkStatus({orderId:orderId.value})
       isCommit.value = false
       if(res.code==200){
-        router.push({
-          path:'/warranty/checkresult',
-          query:{
-            orderId:orderId.value
-          }
-        })
+        per.value = res.data.present *100+'%';
+        day.value = res.data.remindDays
       }else{
         notifStore.setConfig({show:true,text:res.msg})
       }
@@ -63,6 +63,9 @@ const onCheckStatus = async () => {
       
     }
 }
+onMounted(() => {
+  onCheckStatus()
+})
 </script>
 <style lang="less" scoped>
 .bannerBox{

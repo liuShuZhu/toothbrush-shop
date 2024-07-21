@@ -34,6 +34,11 @@ const router = createRouter({
           component:() => import('@/views/warranty/pages/checkStatus.vue'),
         },
         {
+          path:'warranty/checkresult',
+          name:'checkresultPage',
+          component:() => import('@/views/warranty/pages/checkResult.vue'),
+        },
+        {
           path:'information',
           name:'informationPage',
           component:() => import('@/views/warranty/pages/info.vue'),

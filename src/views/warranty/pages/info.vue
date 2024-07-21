@@ -35,7 +35,7 @@
 5.During the warranty period, in case of unforeseen circumstances and the customer is unable to provide replacement parts, a commercial solution will be calculated in accordance with the company's current depreciation regulations instead of maintenance, which is also binding on the buyer.
         </div>
         <div class="item !font-bold">Warranty does not cover:</div>
-        <div class="item">1. Coslus Accessories
+        <div class="item">1. Homeast Accessories
             <br>
         <br>
 1.This product is sold from second-hand markets, unauthorized establishments/websites and other knockoff stores.
@@ -83,11 +83,12 @@
 2.When contacting the service support center, please attach <span class=" text-red-500">[order information + product questions, it is best to provide videos or pictures]</span>.Our team will reply within 24 hours and provide support to your satisfaction.
 <br>
         <br>
-3.Contact us: support@coslus.com
+3.Contact us: <EnvelopeIcon class="h-4 w-4 inline-block mx-1 " /> support@homeast.vip
         </div>
     </div>
 </template>
 <script setup>
+import { EnvelopeIcon } from "@heroicons/vue/24/outline";
 
 </script>
 <style lang="less" scoped>
