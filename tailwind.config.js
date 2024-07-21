@@ -11,11 +11,19 @@ module.exports = {
     //   map[index] = `${index}px`;
     //   return map;
     // }, {}),
-    // extend: {
-    //   fontSize: ({ theme }) => ({
-    //     ...theme("spacing"),
-    //   }),
-    // },
+    extend: {
+      // fontSize: ({ theme }) => ({
+      //   ...theme("spacing"),
+      // }),
+      maxWidth: {
+        '8xl': '96rem',
+        '9xl': '120rem',
+      },
+      screens: {
+        '3xl': '1560px',
+        '4xl': '1930px',
+      }
+    }
   },
   plugins: [
     //   require('@headlessui/tailwindcss')({ prefix: 'ui' })

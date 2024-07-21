@@ -2,7 +2,8 @@
   <SectionFull class="bannerBox  min-h-screen py-12 md:py-20 px-4  flex flex-col items-center justify-center  bg-[#f6fbf9]">
     <div v-if="state.section=='commit'" class=" bg-white shadow-xl px-8 py-5 md:px-16 md:py-10 rounded-lg max-w-[600px] font-normal text-[#1d1d1d]">
         <p class=" text-3xl font-medium">Hi,{{ state.regform.name }}</p>
-        <p class="mt-3 md:mt-6">Your registration has been successfully submitted. A confirmation email will arrive within 10 minutes.</p>
+        <p class="mt-3 md:mt-6">Your registration has been successfully submitted. </p>
+        <!-- A confirmation email will arrive within 10 minutes. -->
         <p class="mt-3 md:mt-6">We warmly invite you to contribute to our brief, one-minute survey. Your insights are invaluable to us and will directly influence the improvements we make to enhance your experience.</p>
         <ul class="mt-3 md:mt-6">
           <li class="liItem">Your feedback is crucial for shaping our service enhancements.</li>
@@ -19,54 +20,47 @@
       <nav aria-label="Progress" class="mx-auto">
         <ol role="list" class="flex items-center">
           <li v-for="(step, stepIdx) in state.steps" :key="step.name" :class="[stepIdx !== state.steps.length - 1 ? 'pr-8 sm:pr-20' : '', 'relative']">
-            <template v-if="step.name <state.nowStep">
+            <template v-if="step.name <(state.oldStep||state.nowStep)">
               <div class="absolute inset-0 flex items-center" aria-hidden="true">
                 <div class="h-0.5 w-full bg-[#ddd]" />
               </div>
-              <div @click="changeStep(step.name)" class="relative cursor-pointer text-white w-8 h-8 flex items-center justify-center bg-[#ddd] rounded-full hover:bg-[#01799c]">
+              <div @click="tabChange(step.name)" class="relative cursor-pointer text-white w-8 h-8 flex items-center justify-center bg-[#ddd] rounded-full hover:bg-[#01799c]">
                 <span>{{ step.name }}</span>
               </div>
             </template>
-            <template v-else-if="step.name ==state.nowStep" >
+            <template v-else-if="step.name ==(state.oldStep||state.nowStep)" >
               <div class="absolute inset-0 flex items-center bg-[]" aria-hidden="true">
                 <div class="h-0.5 w-full bg-[#01799c]" />
               </div>
-              <div @click="changeStep(step.name)" class="relative cursor-pointer w-8 h-8 text-white  flex items-center justify-center bg-[#01799c]  rounded-full" aria-current="step">
+              <div @click="tabChange(step.name)" class="relative cursor-pointer w-8 h-8 text-white  flex items-center justify-center bg-[#01799c]  rounded-full" aria-current="step">
                 <span >{{ step.name }}</span>
-              </div>
-            </template>
-            <template v-else-if='step.name==state.nowStep+1'>
-              <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                <div class="h-0.5 w-full bg-[#ccc]" />
-              </div>
-              <div @click="changeStep(step.name)" class="group cursor-pointer relative w-8 h-8 flex items-center justify-center text-[#01799c] bg-white border-2 border-[#01799c] rounded-full">
-                <span>{{ step.name }}</span>
               </div>
             </template>
             <template v-else>
               <div class="absolute inset-0 flex items-center" aria-hidden="true">
                 <div class="h-0.5 w-full bg-[#ccc]" />
               </div>
-              <div @click="changeStep(step.name)" class="group relative w-8 h-8 flex items-center justify-center text-[#ccc] bg-white border-2 border-[#ccc] rounded-full">
+              <div @click="tabChange(step.name)" class="group cursor-pointer relative w-8 h-8 flex items-center justify-center text-[#01799c] bg-white border-2 border-[#01799c] rounded-full">
                 <span>{{ step.name }}</span>
               </div>
             </template>
+           
           </li>
         </ol>
       </nav>
       
       <RadioGroup   class="bg-white px-10 py-8 rounded-xl max-w-[600px] mt-10 shadow-xl">
         <RadioGroupLabel>
-          <span class="text-3xl font-medium">{{state.steps[state.nowStep-1].title}}</span>
+          <span class="text-3xl font-medium">{{state.steps[(state.oldStep||state.nowStep)-1].title}}</span>
         </RadioGroupLabel>
         <div class=" -space-y-px flex flex-wrap mt-4">
-          <RadioGroupOption as="template" v-for="(setting, settingIdx) in state.steps[state.nowStep-1].ans" :key="setting.name" :value="setting" >
-            <div @click="changeStep(state.nowStep,setting)"  :class="[state.steps[state.nowStep-1].ans.length>2?'w-1/2':'w-full', settingIdx === 0 ? 'rounded-tl-md rounded-tr-md' : '', settingIdx === settings.length - 1 ? 'rounded-bl-md rounded-br-md' : '', state.answer['step'+state.nowStep] == setting ? 'z-10' : '', 'relative  p-4 flex cursor-pointer focus:outline-none']">
-              <span :class="[state.answer['step'+state.nowStep] == setting ? 'bg-[#01799c] border-transparent' : 'bg-white border-[#1d1d1d]', 'h-4 w-4 mt-0.5 cursor-pointer rounded-full border-2 flex items-center justify-center']" aria-hidden="true">
+          <RadioGroupOption as="template" v-for="(setting, settingIdx) in state.steps[(state.oldStep||state.nowStep)-1].ans" :key="setting.name" :value="setting" >
+            <div @click="changeStep((state.oldStep||state.nowStep),setting)"  :class="[state.steps[(state.oldStep||state.nowStep)-1].ans.length>2?'w-1/2':'w-full', settingIdx === 0 ? 'rounded-tl-md rounded-tr-md' : '', settingIdx === settings.length - 1 ? 'rounded-bl-md rounded-br-md' : '', state.answer['step'+state.nowStep] == setting ? 'z-10' : '', 'relative  p-4 flex cursor-pointer focus:outline-none']">
+              <span :class="[state.answer['step'+(state.oldStep||state.nowStep)] == setting ? 'bg-[#01799c] border-transparent' : 'bg-white border-[#1d1d1d]', 'h-4 w-4 mt-0.5 cursor-pointer rounded-full border-2 flex items-center justify-center']" aria-hidden="true">
                 <span class="rounded-full bg-white w-1.5 h-1.5" />
               </span>
               <div class="ml-3 flex flex-col">
-                <RadioGroupLabel as="span" :class="[state.answer['step'+state.nowStep] == setting ? 'text-[#01799c]' : 'text-gray-900', 'block text-sm font-medium']">
+                <RadioGroupLabel as="span" :class="[state.answer['step'+(state.oldStep||state.nowStep)] == setting ? 'text-[#01799c]' : 'text-gray-900', 'block text-sm font-medium']">
                   {{ setting }}
                 </RadioGroupLabel>
                 
@@ -104,8 +98,8 @@
       <CheckCircleIcon class="h-14 w-14 text-[#00db8c]" />
       <div class="text-[#00db8c] text-3xl font-medium mt-3">THANKS!</div>
       
-      <div class="text-sm leading-6 mt-4 text-[#1d1d1d] font-medium">Check your inbox from <a href="mailto:support@claimsrewards.com" class="text-[#01799c] ">
-                support@claimsrewards.com
+      <div class="text-sm leading-6 mt-4 text-[#1d1d1d] font-medium">Check your inbox from <a href="mailto:support@homeast.vip" class="text-[#01799c] ">
+                support@homeast.vip
             </a> for a confirmation email, arriving shortly.</div>
       <div class="text-sm leading-6 mt-3 text-[#1d1d1d] flex font-bold items-center">
         <a href="https://clean.email/blog/email-security/how-to-whitelist-an-email" target="_blank">How to Whitelist an Email</a>
@@ -129,11 +123,6 @@ import { commitQuestion } from "@/api";
 import SectionFull from '@/components/SectionFull/index.vue';
 import { TrophyIcon } from "@heroicons/vue/20/solid";
 import { CheckCircleIcon,QuestionMarkCircleIcon } from "@heroicons/vue/24/outline";
-
-
-
-
-
 
 import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 const router = useRouter()
@@ -160,7 +149,7 @@ const state = reactive({
     { 
         name: 3, 
         title:"Does the product work well?" ,
-        ans:['Yes, everything is great',"Need heep OR doesn't work as expected"],
+        ans:['Yes, everything is great',"Need help OR doesn't work as expected"],
       },
       { 
         name: 4, 
@@ -168,6 +157,7 @@ const state = reactive({
         ans:["Sure! I'd love to.","Sorry. I'm afraid not."],
       }
     ],
+    oldStep:'',
     nowStep:sessionStorage.nowStep?Number(sessionStorage.nowStep):1,
     answer:sessionStorage.answer?JSON.parse(sessionStorage.answer):{
       step1:'',
@@ -190,8 +180,15 @@ const startAnswer = () => {
   sessionStorage.section="question";
   sessionStorage.nowStep=1;
 }
+
+const tabChange = (step) => {
+  if(step<state.nowStep){
+    state.oldStep=step;
+  }else if(step==state.nowStep){
+    state.oldStep = ''
+  }
+}
 const changeStep = async (step,answer) => {
-  console.log(answer,answer.includes('Sure'));
   
   if(answer){
     state.answer['step'+step] = answer
@@ -210,8 +207,14 @@ const changeStep = async (step,answer) => {
       sessionStorage.section = "sorry"
     }
   }
-  state.nowStep=step;
-  sessionStorage.nowStep=step;
+  if(state.oldStep && step!==state.nowStep){
+    state.oldStep = step
+  }else{
+    state.oldStep=''
+    state.nowStep=step;
+    sessionStorage.nowStep=step;
+  }
+ 
 }
 
 const changeSection = (type) => {

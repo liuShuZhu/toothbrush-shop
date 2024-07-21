@@ -49,7 +49,7 @@
         <!-- Secondary navigation -->
         <div class="bg-white">
           <div class="border-b border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="w-full 4xl:max-w-9xl lg:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
               <div class="h-16 flex items-center justify-between">
                 <!-- Logo (lg+) -->
                 <div class="hidden lg:flex lg:flex-1 lg:items-center">
@@ -147,7 +147,7 @@ const toLink =  (path) => {
   }
 }
 .pcLinkItem{
-  @apply flex relative cursor-pointer items-center text-base font-medium text-black;
+  @apply flex relative cursor-pointer items-center text-base 4xl:text-xl font-medium text-black;
   &.active,&:hover{
     &:before{
       content:'';

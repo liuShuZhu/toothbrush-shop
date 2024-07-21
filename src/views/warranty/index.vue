@@ -1,7 +1,9 @@
 <template>
-    <Head></Head>
+    <div class="flex flex-col min-h-screen">
+      <Head></Head>
     <router-view></router-view>
-    <Foot/>  
+    <Foot/> 
+    </div> 
   </template>
   <script setup>
   import Head from '@/components/head.vue'

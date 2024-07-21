@@ -1,5 +1,5 @@
 <template>
-    <div class="formBox">
+    <div class="formBox flex-auto">
         <div class=" bg-[#dbf3ef] min-h-10 flex flex-wrap py-2 items-center justify-center tracking-wider">Questions? Click to email us:
             <a href="mailto:Support@homeast.vip" class="text-[#01799c] font-medium">
                 <EnvelopeIcon class="h-4 w-4 inline-block mx-1 " />

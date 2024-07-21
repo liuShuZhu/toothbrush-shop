@@ -1,32 +1,32 @@
 <template>
-    <SectionFull class="bannerBox min-h-screen text-white flex flex-col items-center justify-center  bg-[#b1c1c8]">
-      <div class="flex flex-col-reverse justify-center items-center h-full md:flex-row md:px-6 max-w-[1440px] w-full mx-auto ">
+    <SectionFull class="bannerBox min-h-screen  text-white flex flex-col items-center justify-center  bg-[#b1c1c8]">
+      <div class="flex flex-col-reverse justify-center items-center h-full md:flex-row md:px-6 max-w-9xl w-full mx-auto 4xl:max-w-9xl lg:max-w-8xl">
         <div class="md:w-[45%] flex flex-col justify-center items-center">
-          <div class="text-[#3069aa] text-[26px] md:text-3xl font-black">VISUAL WATER FLOSSER</div>
+          <div class="text-[#3069aa] text-center px-2 md:px-0 md:text-left text-[26px] md:text-2xl 4xl:text-4xl font-black">HOMEAST Visual Power Dental Flosser</div>
           <div class="py-8 md:pb-0">
             <div class="flex flex-col md:flex-row">
-                <img class="w-full rounded-sm max-w-[280px] flex-auto" v-show="activeShop.color=='white'" src="@/assets/shop_w.jpg" alt="">
-                <img class="w-full rounded-sm max-w-[280px] flex-auto" v-show="activeShop.color=='black'" src="@/assets/shop_b.jpg" alt="">
+                <img class="w-full rounded-sm max-w-[280px] 4xl:max-w-[480px] flex-auto" v-show="(hoverShop||activeShop.color)=='white'" src="@/assets/shop_w.jpg" alt="">
+                <img class="w-full rounded-sm max-w-[280px] 4xl:max-w-[480px] flex-auto" v-show="(hoverShop||activeShop.color)=='black'" src="@/assets/shop_b.jpg" alt="">
                 <div class="flex flex-row flex-none md:flex-col gap-5 mt-8 justify-center md:justify-start md:pl-8 ">
-                  <div v-for="item in shopList" @click="activeShop=item" :key="item.asin" class="cursor-pointer border-2 border-transparent w-6 h-6 rounded-full flex items-center justify-center " 
+                  <div @mouseenter="hoverShop=item.color" @mouseleave="hoverShop=''" v-for="item in shopList" @click="activeShop=item" :key="item.asin" class="cursor-pointer border-2 4xl:border-[4px] border-transparent w-6 h-6 4xl:h-8 4xl:w-8 rounded-full flex items-center justify-center " 
                   
                   :class="{
                     '!border-[#01799c]':item.asin==activeShop.asin
                   }">
-                    <div class="w-5 h-5 rounded-full" :style="{backgroundColor:item.color}"></div>
+                    <div class="w-5 h-5 4xl:h-6 4xl:w-6  rounded-full" :style="{backgroundColor:item.color}"></div>
                   </div>
                 </div>
             </div>
             
-            <a :href="'https://www.amazon.com/dp/'+activeShop.asin" target="_blank"  class="warranty-common-btn mx-auto md:mx-0 mt-6 md:mt-10 bg-[#01799c]  w-2/3 md:w-[210px] rounded-lg before:bg-[#048eb6]">
-              <span class="text-2xl md:text-3xl font-black relative z-10">SHOP NOW</span>
+            <a :href="'https://www.amazon.com/dp/'+activeShop.asin" target="_blank"  class="warranty-common-btn mx-auto md:mx-0 mt-6 md:mt-10 px-4 4xl:px-6 bg-[#ffd814]   md:w-auto  rounded-full before:bg-[#f0cc44]">
+              <span class="text-lg md:text-xl 4xl:text-3xl font-semibold text-[#0f1111] relative z-10">Buy on Amazon</span>
             </a>
           </div>
         
           
         </div>
         <div class="px-4 w-full md:flex-1  my-5 md:mx-0 md:my-0 ">
-          <iframe class="w-full h-[210px] md:h-[430px] bg-black rounded-md"   src="https://www.youtube.com/embed/33bZIOLX4do?si=3F1ON38g4alhd-SN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe class="w-full h-[210px] md:h-[430px] 4xl:h-[640px] bg-black rounded-md"   src="https://www.youtube.com/embed/33bZIOLX4do?si=3F1ON38g4alhd-SN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           <!-- <video class="w-full h-[240px] md:h-[480px] bg-black rounded-md" controls src="https://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video> -->
         </div>
 
@@ -81,6 +81,7 @@
     color:"white",
     asin:'B0D2W643YQ',
   })
+  const hoverShop = ref('')
   const router = useRouter()
 
 
@@ -93,7 +94,7 @@
     background-size: cover;
     }
     .warranty-common-btn{
-    @apply    h-10 md:h-12 relative overflow-hidden cursor-pointer flex justify-center items-center;
+    @apply    h-10 md:h-12 4xl:h-16 relative overflow-hidden cursor-pointer flex md:inline-flex justify-center items-center;
     &:before{
       @apply absolute w-0 h-full left-0 transition-all rounded;
       content: '';
