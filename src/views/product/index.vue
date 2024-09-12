@@ -26,7 +26,7 @@
           
         </div>
         <div class="px-4 w-full md:flex-1  my-5 md:mx-0 md:my-0 ">
-          <iframe class="w-full h-[210px] md:h-[430px] 4xl:h-[640px] bg-black rounded-md"   src="https://www.youtube.com/embed/33bZIOLX4do?si=3F1ON38g4alhd-SN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe class="w-full h-[210px] md:h-[430px] 4xl:h-[640px] bg-black rounded-md"   src="https://www.youtobe.com/embed/qSAqpgbyF-U?si=BAjC1bCcP7XJo3Yb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           <!-- <video class="w-full h-[240px] md:h-[480px] bg-black rounded-md" controls src="https://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video> -->
         </div>
 
