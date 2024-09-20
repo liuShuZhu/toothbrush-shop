@@ -63,5 +63,18 @@ const router = createRouter({
     // vue3.0  left  top 控制
     return { left: 0, top: 0 }  }
 })
+router.beforeEach((to, from,next) => {
+  // ...
+  // 返回 false 以取消导航
+  if(window.location.href.includes('homeast.shop')){
+    window.location.href = window.location.href.replace("homeast.shop","homeast.vip");
+  }else{
+    console.log(window.location);
+    next()
 
+    // window.location.href = "https://homeast.vip"
+
+  }
+  
+})
 export default router
