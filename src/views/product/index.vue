@@ -89,7 +89,7 @@
 
   <style lang="less" scoped>
     .bannerBox{
-      // background-image: url(@/assets/productbanner_pc.webp);
+    background-image: url(@/assets/homebg.jpg);
     background-position: center;
     background-size: cover;
     }
